@@ -1,2 +1,2 @@
 ### Algorithms
-This is repository containing implementations and maybe descriptions of some algorithms in C or C++ programming languages.  
+This is repository containing implementations of some algorithms in C++ programming language.  
