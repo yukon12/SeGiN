@@ -1,56 +1,74 @@
-#include <segment_tree.h>
+#include <stdlib.h>
+#include <SeGiN/segment_tree.h>
 
-SegmentTree* SGN_constructSegmentTree(int n)
+SegmentTree* SGN_constructSegmentTree(int* array, int size)
 {
-    SegmentTree* object = (SegmentTree*)malloc(sizeof(SegmentTree));
-    object->tree = (int*)calloc(2*n, sizeof(int));
-    object->size = n;
-}
+    SegmentTree* segmentTree = (SegmentTree*)malloc(sizeof(SegmentTree));
+    segmentTree->tree = (int*)malloc(2*size*sizeof(int));
+    segmentTree->size = size;
 
-void SGN_update(SegmentTree* segmentTree, int p, int v)
-{
-    if(p<0 || p>segmentTree->size)
+    int* tree = segmentTree->tree;
+
+    for(int i = 0; i < size; i++)
     {
-        return;
+        tree[size+i] = array[i];
     }
 
-    p += segmentTree->size;
-    segmentTree->tree[p] = v;
-    p /= 2;
-
-    while(p>0)
+    for(int i = size-1; i > 0; i--)
     {
-        segmentTree->tree[p] = segmentTree->tree[2*p] + segmentTree->tree[2*p+1];
-        p /= 2;
+        tree[i] = tree[2*i] + tree[2*i+1];
+    }
+
+    return segmentTree;
+}
+
+void SGN_update(SegmentTree* segmentTree, int position, int value)
+{
+    int* tree = segmentTree->tree;
+    int size = segmentTree->size;
+
+    if(position<0||position>size) return;
+
+    position += size;
+    tree[position] = value;
+    position /= 2;
+
+    while(position>0)
+    {
+        tree[position] = tree[2*position] + tree[2*position+1];
+        position /= 2;
     }
 }
 
-int SGN_query(SegmentTree* segmentTree, int l, int r)
+int SGN_query(SegmentTree* segmentTree, int left, int right)
 {
-    if(l<0||l>segmentTree->size||r<0||r>segmentTree->size)
+    int *tree = segmentTree->tree;
+    int size = segmentTree->size;
+
+    if(left<0||left>size||right<0||right>size)
     {
         return 0;
     }
 
     int result = 0;
-    l += segmentTree->size;
-    r += segmentTree->size;
+    left += size;
+    right += size;
 
-    while(l<=r)
+    while(left<=right)
     {
-        if(l%2==1)
+        if(left%2==1)
         {
-            result += segmentTree->tree[l];
-            l++;
+            result += tree[left];
+            left++;
         }
-        if(r%2==0)
+        if(right%2==0)
         {
-            result += segmentTree->tree[r];
-            r--;
+            result += tree[right];
+            right--;
         }
 
-        l /= 2;
-        r /= 2;
+        left /= 2;
+        right /= 2;
     }
 
     return result;

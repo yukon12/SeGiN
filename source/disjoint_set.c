@@ -1,46 +1,47 @@
-#include <disjoint_set.h>
+#include <stdlib.h>
+#include <SeGiN/swap.h>
+#include <SeGiN/disjoint_set.h>
 
-DisjointSet* SGN_constructDisjointSet(int n)
+DisjointSet* SGN_constructDisjointSet(int size)
 {
-    DisjointSet* object = (DisjointSet*)malloc(sizeof(DisjointSet));
-    object->parent = malloc(n*sizeof(int));
-    object->rank = malloc(n*sizeof(int));
-    object->size = n;
+    DisjointSet* disjointSet = (DisjointSet*)malloc(sizeof(DisjointSet));
+    disjointSet->parent = (int*)malloc(size*sizeof(int));
+    disjointSet->rank = (int*)malloc(size*sizeof(int));
+    disjointSet->size = size;
 
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < size; i++)
     {
-        object->parent[i] = i;
-        object->rank[i] = 1;
+        disjointSet->parent[i] = i;
+        disjointSet->rank[i] = 0;
     }
 
-    return object;
+    return disjointSet;
 }
 
 int SGN_find(DisjointSet* disjointSet, int u)
 {
-    if(u<0 || u>disjointSet->size)
-    {
-        return -1;
-    }
+    int *parent = disjointSet->parent;
+    int *rank = disjointSet->rank;
+    int size = disjointSet->size;
 
-    if(disjointSet->parent[u]!=u) disjointSet->parent[u] = SGN_find(disjointSet, disjointSet->parent[u]);
-    return disjointSet->parent[u];
+    if(u<0 || u>size) return -1;
+
+    if(parent[u]!=u) parent[u] = SGN_find(disjointSet, parent[u]);
+    return parent[u];
 }
 
 void SGN_union(DisjointSet* disjointSet, int u, int v)
 {
+    int *parent = disjointSet->parent;
+    int *rank = disjointSet->rank;
+    int size = disjointSet->size;
+
+    if(u<0||u>size||v<0||v>size) return;
+
     u = SGN_find(disjointSet, u);
     v = SGN_find(disjointSet, v);
-    if(u==v)
-    {
-        return;
-    }
-    if(disjointSet->rank[u]<disjointSet->rank[v])
-    {
-        int temp = u;
-        u = v;
-        v = temp;
-    }
-    disjointSet->parent[v] = u;
-    disjointSet->rank[u] += disjointSet->rank[v];
+    if(u==v) return;
+    if(rank[u]<rank[v]) SGN_swap(&u, &v, sizeof(int));
+    parent[v] = u;
+    if(rank[u]==rank[v]) rank[u]++;
 }
