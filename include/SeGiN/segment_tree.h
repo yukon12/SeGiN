@@ -5,10 +5,10 @@ typedef struct
 {
     int *tree;
     int size;
-} SegmentTree;
+} SGN_SegmentTree;
 
-SegmentTree* SGN_constructSegmentTree(int* array, int size);
-void SGN_update(SegmentTree* segmentTree, int position, int value);
-int SGN_query(SegmentTree* segmentTree, int left, int right);
+SGN_SegmentTree* SGN_constructSegmentTree(int* array, int size);
+void SGN_update(SGN_SegmentTree* segmentTree, int position, int value);
+int SGN_query(SGN_SegmentTree* segmentTree, int left, int right);
 
 #endif

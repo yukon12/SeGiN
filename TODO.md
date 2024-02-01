@@ -1,5 +1,4 @@
 ### Algorithms and data structures to be implemented
-* Prefix sum array.
 * Kadane's algorithm.
 * Dijkstra's algorithm.
 * Binary exponentation.

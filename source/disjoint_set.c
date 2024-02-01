@@ -2,9 +2,9 @@
 #include <SeGiN/swap.h>
 #include <SeGiN/disjoint_set.h>
 
-DisjointSet* SGN_constructDisjointSet(int size)
+SGN_DisjointSet* SGN_constructDisjointSet(int size)
 {
-    DisjointSet* disjointSet = (DisjointSet*)malloc(sizeof(DisjointSet));
+    SGN_DisjointSet* disjointSet = (SGN_DisjointSet*)malloc(sizeof(SGN_DisjointSet));
     disjointSet->parent = (int*)malloc(size*sizeof(int));
     disjointSet->rank = (int*)malloc(size*sizeof(int));
     disjointSet->size = size;
@@ -18,7 +18,7 @@ DisjointSet* SGN_constructDisjointSet(int size)
     return disjointSet;
 }
 
-int SGN_find(DisjointSet* disjointSet, int u)
+int SGN_find(SGN_DisjointSet* disjointSet, int u)
 {
     int *parent = disjointSet->parent;
     int *rank = disjointSet->rank;
@@ -30,7 +30,7 @@ int SGN_find(DisjointSet* disjointSet, int u)
     return parent[u];
 }
 
-void SGN_union(DisjointSet* disjointSet, int u, int v)
+void SGN_union(SGN_DisjointSet* disjointSet, int u, int v)
 {
     int *parent = disjointSet->parent;
     int *rank = disjointSet->rank;

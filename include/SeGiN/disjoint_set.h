@@ -6,10 +6,10 @@ typedef struct
     int *parent;
     int *rank;
     int size;
-} DisjointSet;
+} SGN_DisjointSet;
 
-DisjointSet* SGN_constructDisjointSet(int size);
-int SGN_find(DisjointSet* disjointSet, int u);
-void SGN_union(DisjointSet* disjointSet, int u, int v);
+SGN_DisjointSet* SGN_constructDisjointSet(int size);
+int SGN_find(SGN_DisjointSet* disjointSet, int u);
+void SGN_union(SGN_DisjointSet* disjointSet, int u, int v);
 
 #endif

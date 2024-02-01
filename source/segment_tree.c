@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <SeGiN/segment_tree.h>
 
-SegmentTree* SGN_constructSegmentTree(int* array, int size)
+SGN_SegmentTree* SGN_constructSegmentTree(int* array, int size)
 {
-    SegmentTree* segmentTree = (SegmentTree*)malloc(sizeof(SegmentTree));
+    SGN_SegmentTree* segmentTree = (SGN_SegmentTree*)malloc(sizeof(SGN_SegmentTree));
     segmentTree->tree = (int*)malloc(2*size*sizeof(int));
     segmentTree->size = size;
 
@@ -22,7 +22,7 @@ SegmentTree* SGN_constructSegmentTree(int* array, int size)
     return segmentTree;
 }
 
-void SGN_update(SegmentTree* segmentTree, int position, int value)
+void SGN_update(SGN_SegmentTree* segmentTree, int position, int value)
 {
     int* tree = segmentTree->tree;
     int size = segmentTree->size;
@@ -40,7 +40,7 @@ void SGN_update(SegmentTree* segmentTree, int position, int value)
     }
 }
 
-int SGN_query(SegmentTree* segmentTree, int left, int right)
+int SGN_query(SGN_SegmentTree* segmentTree, int left, int right)
 {
     int *tree = segmentTree->tree;
     int size = segmentTree->size;
