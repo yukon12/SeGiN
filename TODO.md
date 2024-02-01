@@ -1,5 +1,4 @@
 ### Algorithms and data structures to be implemented
-* Kadane's algorithm.
 * Dijkstra's algorithm.
 * Binary exponentation.
 * Binary lifting.
