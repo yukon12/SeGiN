@@ -1,40 +1,28 @@
 #include <stdlib.h>
+#include <limits.h>
+#include <assert.h>
 #include <SeGiN/graph.h>
 
-SGN_Edge* SGN_constructEdge(int u, int v)
+int** SGN_constructGraph(int size)
 {
-    SGN_Edge* edge = (SGN_Edge*)malloc(sizeof(edge));
-    edge->u = u;
-    edge->v = v;
-    return edge;
+    int** graph = (int**)malloc(size*sizeof(int*));
+    for(int u = 0; u < size; u++)
+    {
+        graph[u] = (int*)malloc(size*sizeof(int));
+        for(int v = 0; v < size; v++) graph[u][v] = INT_MAX;
+    }
+    return graph;
 }
 
-SGN_Graph* SGN_constructGraph(SGN_Edge** edge, int edgeCount, int size)
+void SGN_addUndirectedEdge(int** graph, int size, int u, int v, int weight)
 {
-    SGN_Graph* graph = (SGN_Graph*)malloc(sizeof(SGN_Graph));
-    graph->adjacency = (int**)malloc(size*sizeof(int*));
-    graph->neighbours = (int*)calloc(size, sizeof(int));
-    graph->size = size;
+    assert(u>=0&&u<size&&v>=0&&v<size);
+    graph[u][v] = weight;
+    graph[v][u] = weight;
+}
 
-    int** adjacency = graph->adjacency;
-    int* neighbours = graph->neighbours;
-    int* alreadyAdded = (int*)calloc(size, sizeof(int));
-
-    for(int i = 0; i < edgeCount; i++)
-    {
-        neighbours[edge[i]->u]++;
-        neighbours[edge[i]->v]++;
-    } 
-
-    for(int i = 0; i < size; i++) adjacency[i] = (int*)malloc(neighbours[i]*sizeof(int));
-
-    for(int i = 0; i < edgeCount; i++)
-    {
-        adjacency[edge[i]->u][alreadyAdded[edge[i]->u]++] = edge[i]->v;
-        adjacency[edge[i]->v][alreadyAdded[edge[i]->v]++] = edge[i]->u;
-    }
-
-    free(alreadyAdded);
-
-    return graph;
+void SGN_addDirectedEdge(int** graph, int size, int u, int v, int weight)
+{
+    assert(u>=0&&u<size&&v>=0&&v<size);
+    graph[u][v] = weight;
 }

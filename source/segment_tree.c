@@ -1,13 +1,10 @@
 #include <stdlib.h>
+#include <assert.h>
 #include <SeGiN/segment_tree.h>
 
-SGN_SegmentTree* SGN_constructSegmentTree(int* array, int size)
+int* SGN_constructSegmentTree(int* array, int size)
 {
-    SGN_SegmentTree* segmentTree = (SGN_SegmentTree*)malloc(sizeof(SGN_SegmentTree));
-    segmentTree->tree = (int*)malloc(2*size*sizeof(int));
-    segmentTree->size = size;
-
-    int* tree = segmentTree->tree;
+    int* tree = (int*)malloc(2*size*sizeof(int));
 
     for(int i = 0; i < size; i++)
     {
@@ -19,16 +16,12 @@ SGN_SegmentTree* SGN_constructSegmentTree(int* array, int size)
         tree[i] = tree[2*i] + tree[2*i+1];
     }
 
-    return segmentTree;
+    return tree;
 }
 
-void SGN_update(SGN_SegmentTree* segmentTree, int position, int value)
+void SGN_updateST(int* tree, int size, int position, int value)
 {
-    int* tree = segmentTree->tree;
-    int size = segmentTree->size;
-
-    if(position<0||position>size) return;
-
+    assert(position>=0&&position<size);
     position += size;
     tree[position] = value;
     position /= 2;
@@ -40,16 +33,10 @@ void SGN_update(SGN_SegmentTree* segmentTree, int position, int value)
     }
 }
 
-int SGN_query(SGN_SegmentTree* segmentTree, int left, int right)
+int SGN_queryST(int* tree, int size, int left, int right)
 {
-    int *tree = segmentTree->tree;
-    int size = segmentTree->size;
-
-    if(left<0||left>size||right<0||right>size)
-    {
-        return 0;
-    }
-
+    assert(left>=0&&left<size&&right>=0&&right<size);
+    
     int result = 0;
     left += size;
     right += size;

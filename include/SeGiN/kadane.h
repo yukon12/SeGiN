@@ -1,7 +1,7 @@
 #ifndef SGN_KADANE
 #define SGN_KADANE
 
-int SGN_minimumSubarraySum(int* array, int sum);
-int SGN_maximumSubarraySum(int* array, int sum);
+int SGN_kadaneMinimum(int* array, int size, int *leftBound, int *rightBound);
+int SGN_kadaneMaximum(int* array, int size, int *leftBound, int *rightBound);
 
 #endif

@@ -3,8 +3,6 @@
 
 int SGN_minimum(int left, int right);
 int SGN_maximum(int left, int right);
-void SGN_limitMinimum(int* variable, int limit);
-void SGN_limitMaximum(int* variable, int limit);
 int SGN_exponentiation(int base, int exponent, int modulus);
 
 #endif

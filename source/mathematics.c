@@ -13,16 +13,6 @@ int SGN_maximum(int left, int right)
     return right;
 }
 
-void SGN_limitMinimum(int* variable, int limit)
-{
-    if(*variable<limit) *variable = limit;
-}
-
-void SGN_limitMaximum(int* variable, int limit)
-{
-    if(*variable>limit) *variable = limit;
-}
-
 int SGN_exponentiation(int base, int exponent, int modulus)
 {
     if(exponent==0) return 1;
