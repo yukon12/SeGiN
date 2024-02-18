@@ -16,7 +16,7 @@ all: link
 	@echo $* compiled
 
 link: $(OBJ)
-	@ar rc $(LIB_DIR)/lib$(LIB_NAME) $(OBJ)
+	@ar rc $(LIB_DIR)/lib$(LIB_NAME).a $(OBJ)
 	@echo library linked
 
 clean:

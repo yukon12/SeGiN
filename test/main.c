@@ -5,6 +5,7 @@
 #include <SeGiN/array.h>
 #include <SeGiN/prefix_sum_array.h>
 #include <SeGiN/segment_tree.h>
+#include <SeGiN/lazy_tree.h>
 #include <SeGiN/kadane.h>
 #include <SeGiN/heap.h>
 #include <SeGiN/knapsack.h>
@@ -36,6 +37,17 @@ int main()
     assert(SGN_queryST(segmentTree, segmentTreeSize, 6, 9)==-3);
     SGN_updateST(segmentTree, segmentTreeSize, 0, 10);
     assert(SGN_queryST(segmentTree, segmentTreeSize, 0, 3)==16);
+
+    // LAZY TREE
+    int lazyTreeSize = 10;
+    int memory;
+    int* lazyTree1 = SGN_constructLazyTree(array, lazyTreeSize, &memory);
+    int* lazyTree2 = (int*)calloc(memory, sizeof(int));
+    assert(memory==32);
+    assert(SGN_queryLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 9)==17);
+    assert(SGN_queryLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 3)==3);
+    SGN_updateLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 3, 1);
+    assert(SGN_queryLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 3)==7);
 
     // KADANE
     int leftBound;
@@ -115,6 +127,6 @@ int main()
     SGN_unionDSU(dsu, dsuRank, dsuSize, 0, 1);
     assert(SGN_findDSU(dsu, dsuSize, 0)==SGN_findDSU(dsu, dsuSize, 1));
 
-    printf("All tests passed.\n");
+    printf("all tests passed\n");
     return 0;
 }
