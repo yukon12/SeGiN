@@ -6,6 +6,7 @@
 #include <SeGiN/prefix_sum_array.h>
 #include <SeGiN/segment_tree.h>
 #include <SeGiN/lazy_tree.h>
+#include <SeGiN/fenwick_tree.h>
 #include <SeGiN/kadane.h>
 #include <SeGiN/heap.h>
 #include <SeGiN/knapsack.h>
@@ -48,6 +49,15 @@ int main()
     assert(SGN_queryLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 3)==3);
     SGN_updateLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 3, 1);
     assert(SGN_queryLT(lazyTree1, lazyTree2, lazyTreeSize, 0, 3)==7);
+
+    // FENWICK TREE
+    int fenwickTreeSize = 10;
+    int* fenwickTree = SGN_constructFenwickTree(array, segmentTreeSize);
+    for(int i = 0; i < 10; i++) printf("%d ", fenwickTree[i]); printf("\n");
+    assert(SGN_queryFT(fenwickTree, fenwickTreeSize, 1, 3)==6);
+    assert(SGN_queryFT(fenwickTree, fenwickTreeSize, 6, 9)==-3);
+    SGN_updateFT(fenwickTree, fenwickTreeSize, 1, 10);
+    assert(SGN_queryFT(fenwickTree, fenwickTreeSize, 1, 3)==16);
 
     // KADANE
     int leftBound;

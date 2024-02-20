@@ -27,7 +27,7 @@ int* SGN_constructLazyTree(int* array, int size, int* treeSize)
     return tree;
 }
 
-int queryUtility(int* tree, int* lazy, int size, int node, int spanLeft, int spanRight, int queryLeft, int queryRight)
+int queryUtility(int* tree, int* lazy, int node, int spanLeft, int spanRight, int queryLeft, int queryRight)
 {
     if(lazy[node]!=0)
     {
@@ -46,18 +46,18 @@ int queryUtility(int* tree, int* lazy, int size, int node, int spanLeft, int spa
 
     int spanMiddle = (spanLeft+spanRight)/2;
     int result = 0;
-    result += queryUtility(tree, lazy, size, 2*node+1, spanLeft, spanMiddle, queryLeft, queryRight);
-    result += queryUtility(tree, lazy, size, 2*node+2, spanMiddle+1, spanRight, queryLeft, queryRight);
+    result += queryUtility(tree, lazy, 2*node+1, spanLeft, spanMiddle, queryLeft, queryRight);
+    result += queryUtility(tree, lazy, 2*node+2, spanMiddle+1, spanRight, queryLeft, queryRight);
     return result;
 }
 
 int SGN_queryLT(int* tree, int* lazy, int size, int left, int right)
 {
     assert(left>=0&&left<size&&right>=0&&right<size);
-    return queryUtility(tree, lazy, size, 0, 0, size-1, left, right);
+    return queryUtility(tree, lazy, 0, 0, size-1, left, right);
 }
 
-void updateUtility(int* tree, int* lazy, int size, int node, int spanLeft, int spanRight, int updateLeft, int updateRight, int value)
+void updateUtility(int* tree, int* lazy, int node, int spanLeft, int spanRight, int updateLeft, int updateRight, int value)
 {
     if(lazy[node]!=0)
     {
@@ -84,13 +84,13 @@ void updateUtility(int* tree, int* lazy, int size, int node, int spanLeft, int s
     }
 
     int spanMiddle = (spanLeft+spanRight)/2;
-    updateUtility(tree, lazy, size, 2*node+1, spanLeft, spanMiddle, updateLeft, updateRight, value);
-    updateUtility(tree, lazy, size, 2*node+2, spanMiddle+1, spanRight, updateLeft, updateRight, value);
+    updateUtility(tree, lazy, 2*node+1, spanLeft, spanMiddle, updateLeft, updateRight, value);
+    updateUtility(tree, lazy, 2*node+2, spanMiddle+1, spanRight, updateLeft, updateRight, value);
     tree[node] = tree[2*node+1]+tree[2*node+2];
 }
 
 void SGN_updateLT(int* tree, int* lazy, int size, int left, int right, int value)
 {
     assert(left>=0&&left<size&&right>=0&&right<size);
-    updateUtility(tree, lazy, size, 0, 0, size-1, left, right, value);
+    updateUtility(tree, lazy, 0, 0, size-1, left, right, value);
 }

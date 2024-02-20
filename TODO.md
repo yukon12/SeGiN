@@ -6,4 +6,3 @@
 * Rabin-Karp algorithm + rolling hash.
 * Longest common subsequence.
 * Knapsack, bitset knapsack.
-* Fenwick tree.
