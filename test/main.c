@@ -12,6 +12,7 @@
 #include <SeGiN/knapsack.h>
 #include <SeGiN/graph.h>
 #include <SeGiN/dijkstra.h>
+#include <SeGiN/tree.h>
 #include <SeGiN/disjoint_set_union.h>
 
 int main()
@@ -53,7 +54,6 @@ int main()
     // FENWICK TREE
     int fenwickTreeSize = 10;
     int* fenwickTree = SGN_constructFenwickTree(array, segmentTreeSize);
-    for(int i = 0; i < 10; i++) printf("%d ", fenwickTree[i]); printf("\n");
     assert(SGN_queryFT(fenwickTree, fenwickTreeSize, 1, 3)==6);
     assert(SGN_queryFT(fenwickTree, fenwickTreeSize, 6, 9)==-3);
     SGN_updateFT(fenwickTree, fenwickTreeSize, 1, 10);
@@ -126,6 +126,22 @@ int main()
     assert(distance[7]==4);
     assert(distance[8]==10);
     assert(distance[9]==12);
+
+    // TREE
+    assert(!SGN_isTree(graph, graphSize));
+    int treeSize = 5;
+    int** anotherGraph = SGN_constructGraph(5);
+    SGN_addUndirectedEdge(anotherGraph, treeSize, 0, 1, 1);
+    SGN_addUndirectedEdge(anotherGraph, treeSize, 0, 2, 1);
+    SGN_addUndirectedEdge(anotherGraph, treeSize, 0, 3, 1);
+    SGN_addUndirectedEdge(anotherGraph, treeSize, 1, 4, 1);
+    assert(SGN_isTree(anotherGraph, treeSize));
+    int* tree = SGN_constructTree(anotherGraph, treeSize, 0);
+    assert(tree[0]==-1);
+    assert(tree[1]==0);
+    assert(tree[2]==0);
+    assert(tree[3]==0);
+    assert(tree[4]==1);
 
     // DISJOINT SET UNION
     int dsuSize = 10;
